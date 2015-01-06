@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# install ansible prerequisites
+easy_install --user pip
+/Users/tomohiro_urakawa/Library/Python/2.7/bin/pip install --upgrade --user pyyaml jinja2 nose passlib pycrypto 2>/dev/null
+
+# install ansible
+ANSIBLE_REPO=$HOME/src/github.com/ansible/ansible
+[[ ! -e $ANSIBLE_REPO ]] && git clone git://github.com/ansible/ansible $ANSIBLE_REPO
+pushd $ANSIBLE_REPO
+git pull 
+git submodule update --init lib/ansible/modules/core
+git submodule update --init lib/ansible/modules/extras
+git submodule update --init v2/ansible/modules/core
+git submodule update --init v2/ansible/modules/extras
+popd
+
+# setup
+source $ANSIBLE_REPO/hacking/env-setup
+

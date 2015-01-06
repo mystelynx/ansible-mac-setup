@@ -1,0 +1,16 @@
+#
+# prerequisite
+# - install Xcode (not commandline tools)
+# - run `sudo xcodebuild -license` and follow instructions
+#
+- hosts: localhost
+
+  tasks:
+ 
+  - name: download sources
+    git: repo=git://github.com/codefirst/aquaskk dest={{ ansible_env.HOME }}/src/github.com/codefirst/aquaskk
+         ssh_opts="-o StrictHostKeyChecking=no"
+
+  - name: build release
+    command: make install-rc chdir={{ ansible_env.HOME }}/src/github.com/codefirst/aquaskk/platform/mac
+

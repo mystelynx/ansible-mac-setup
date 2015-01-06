@@ -1,0 +1,29 @@
+- hosts: localhost
+  sudo: yes
+
+  tasks:
+ 
+  - name: stop sshd daemon
+    command: launchctl unload -w /System/Library/LaunchDaemons/ssh.plist
+
+  - name: modify plist to use brewed sshd
+    replace: dest=/System/Library/LaunchDaemons/ssh.plist 
+             regexp='(/usr/libexec/sshd-keygen-wrapper|/usr/sbin/sshd)'
+             replace='/usr/local/sbin/sshd'
+             backup=yes
+
+  - name: start sshd daemon
+    command: launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+
+  - name: stop ssh-agent
+    command: launchctl unload -w /System/Library/LaunchAgents/org.openbsd.ssh-agent.plist
+
+  - name: modify plist to use brewed ssh-agent 
+    replace: dest=/System/Library/LaunchAgents/org.openbsd.ssh-agent.plist
+             regexp='/usr/bin/ssh-agent'
+             replace='/usr/local/bin/ssh-agent'
+             backup=yes
+
+  - name: start ssh-agent
+    command: launchctl load -w /System/Library/LaunchAgents/org.openbsd.ssh-agent.plist
+

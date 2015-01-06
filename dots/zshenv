@@ -1,0 +1,8 @@
+# 
+[ -z "$pythonpath" ] && typeset -xT PYTHONPATH pythonpath
+#
+typeset -U path cdpath fpath manpath pythonpath
+
+#
+export GOPATH=$HOME 
+

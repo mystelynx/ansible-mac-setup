@@ -1,0 +1,84 @@
+---
+#
+- hosts: localhost
+
+  tasks:
+  
+  - name: create required directories
+    file: path={{ item }} state=directory
+    with_items:
+    - /usr/local/bin
+    - "{{ ansible_env.HOME }}/src"
+    - "{{ ansible_env.HOME }}/bin"
+    - "{{ ansible_env.HOME }}/work"
+
+  - name: create directory and files for hg requirement
+    raw: |
+      mkdir -p {{ ansible_env.HOME }}/Library/Python/2.7/lib/python/site-packages; 
+      echo 'import site; site.addsitedir("/usr/local/lib/python2.7/site-packages")' > {{ ansible_env.HOME }}/Library/Python/2.7/lib/python/site-packages/homebrew.pth
+
+  - name: checkout homebrew 
+    git: repo=git://github.com/Homebrew/homebrew dest=/usr/local/src/homebrew
+         ssh_opts="-o StrictHostKeyChecking=no"
+
+  - name: symlink to brew
+    file: src=/usr/local/src/homebrew/bin/brew dest=/usr/local/bin/brew state=link
+
+  - name: update homebrew
+    homebrew: update_homebrew=yes upgrade_all=yes
+
+  - name: add homebrew repositories
+    homebrew_tap: tap={{ item }} state=present
+    with_items:
+    - homebrew/dupes
+    - caskroom/cask
+    - homebrew/versions
+    - caskroom/versions
+    - peco/peco
+    - motemen/ghq
+#    - aereal/homebrew-aereal_casks # TODO: error...
+
+  - name: install packages
+    homebrew: name={{ item }} state=latest
+    with_items:
+    - direnv
+    - pt
+    - brew-cask
+    - jq
+    - tmux
+    - docker
+    - boot2docker
+    - vim
+    - zsh
+    - git
+    - peco
+    - ghq
+
+  # run etc/init-openssh.yml to reconfigure and restart daemons
+  - name: install openssh package
+    homebrew: name=openssh state=latest
+              install_options=with-keychain-support
+
+  - name: install cask packages
+    homebrew_cask: name={{ item }}
+    with_items:
+    - google-chrome
+    - dropbox
+    - 1password
+    - alfred
+    - pivotalbooster
+    - amethyst
+    - shortcat
+    - intellij-idea
+    - java6
+    - java7
+    - java
+    - iterm2
+    - aquaskk
+    - teleport
+
+  - name: locate dot-files
+    file: src={{ item }} dest={{ ansible_env.HOME }}/.{{ item | basename }} state=link
+    with_fileglob:
+    - dots/*
+
