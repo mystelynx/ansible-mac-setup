@@ -1,0 +1,2 @@
+ansible-mac-setup
+=================
