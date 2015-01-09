@@ -4,3 +4,6 @@
 [user]
 	name = mystelynx
 	email = me@urau.la
+
+[credential]
+	helper = osxkeychain
