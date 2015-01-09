@@ -54,7 +54,7 @@
     - peco
     - ghq
     - ttyrec
-    - imagemagic
+    - imagemagick
 
   # run etc/init-openssh.yml to reconfigure and restart daemons
   - name: install openssh package
