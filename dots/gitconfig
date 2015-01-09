@@ -1,3 +1,6 @@
 [ghq]
     root = ~/src
 
+[user]
+	name = mystelynx
+	email = me@urau.la
