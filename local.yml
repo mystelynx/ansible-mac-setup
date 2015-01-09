@@ -7,7 +7,6 @@
   - name: create required directories
     file: path={{ item }} state=directory
     with_items:
-    - /usr/local/bin
     - "{{ ansible_env.HOME }}/src"
     - "{{ ansible_env.HOME }}/bin"
     - "{{ ansible_env.HOME }}/work"
@@ -17,12 +16,14 @@
       mkdir -p {{ ansible_env.HOME }}/Library/Python/2.7/lib/python/site-packages; 
       echo 'import site; site.addsitedir("/usr/local/lib/python2.7/site-packages")' > {{ ansible_env.HOME }}/Library/Python/2.7/lib/python/site-packages/homebrew.pth
 
-  - name: checkout homebrew 
-    git: repo=git://github.com/Homebrew/homebrew dest=/usr/local/src/homebrew
-         ssh_opts="-o StrictHostKeyChecking=no"
+  - name: check homebrew installation
+    command: test -e /usr/local/bin/brew
+    register: homebrew_installed
+    ignore_errors: yes
 
-  - name: symlink to brew
-    file: src=/usr/local/src/homebrew/bin/brew dest=/usr/local/bin/brew state=link
+  - name: install homebrew 
+    raw: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 
+    when: homebrew_installed|failed   
 
   - name: update homebrew
     homebrew: update_homebrew=yes upgrade_all=yes
@@ -36,7 +37,6 @@
     - caskroom/versions
     - peco/peco
     - motemen/ghq
-#    - aereal/homebrew-aereal_casks # TODO: error...
 
   - name: install packages
     homebrew: name={{ item }} state=latest
@@ -53,6 +53,8 @@
     - git
     - peco
     - ghq
+    - ttyrec
+    - imagemagic
 
   # run etc/init-openssh.yml to reconfigure and restart daemons
   - name: install openssh package
@@ -74,8 +76,11 @@
     - java7
     - java
     - iterm2
-    - aquaskk
     - teleport
+    - authy-bluetooth
+    - karabiner
+    - seil
+    - xtrafinder
 
   - name: locate dot-files
     file: src={{ item }} dest={{ ansible_env.HOME }}/.{{ item | basename }} state=link

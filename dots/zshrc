@@ -1,1 +1,21 @@
 # Created by newuser for 5.0.7
+
+# direnv
+eval "$(direnv hook zsh)"
+
+autoload -Uz promptinit && promptinit
+prompt off
+autoload -Uz compinit && compinit
+
+alias ls='ls -aFG'
+alias ll='ls -alFG'
+
+function gcd() {
+  local selected=$(ghq list --unique | peco)
+  #BUFFER=$selected
+  if [ -n "$selected" ]; then
+    ghq look $selected
+  fi
+}
+
+setopt TRANSIENT_RPROMPT

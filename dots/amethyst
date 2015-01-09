@@ -1,0 +1,20 @@
+{
+  "layouts": [
+    "widescreen-tall",
+    "column"
+  ],
+  "mouse-follows-focus": true,
+  "focus-follows-mouse": true,
+  "floating": [
+    "com.runningwithcrayons.Alfred-Preferences",
+    "com.apple.systempreferences",
+    "com.apple.finder",
+    "com.apple.appstore",
+    "com.microsoft.rdc.mac",
+    "com.jetbrains.intellij",
+    "org.pqrs.Karabiner",
+    "org.pqrs.Karabiner.EventViewer"
+  ]
+}
+
+
