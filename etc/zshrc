@@ -6,6 +6,9 @@ eval "$(direnv hook zsh)"
 alias ls='ls -aFG'
 alias ll='ls -alFG'
 
+# https://github.com/zimbatm/direnv/commit/9419ef5e29a3fe26539c9aa4050f9853debd52f5
+alias tmux='direnv exec / tmux'
+
 function gcd() {
   local selected=$(ghq list --unique | peco)
   #BUFFER=$selected
