@@ -3,10 +3,6 @@
 # direnv
 eval "$(direnv hook zsh)"
 
-autoload -Uz promptinit && promptinit
-prompt off
-autoload -Uz compinit && compinit
-
 alias ls='ls -aFG'
 alias ll='ls -alFG'
 
@@ -18,4 +14,3 @@ function gcd() {
   fi
 }
 
-setopt TRANSIENT_RPROMPT
