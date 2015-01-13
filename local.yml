@@ -55,6 +55,7 @@
     - ghq
     - ttyrec
     - imagemagick
+    - hub
 
   # run etc/init-openssh.yml to reconfigure and restart daemons
   - name: install openssh package
@@ -81,6 +82,14 @@
     - karabiner
     - seil
     - xtrafinder
+  
+  - name: install zprezto
+    git: repo=https://github.com/sorin-ionescu/prezto dest={{ ansible_env.HOME }}/.zprezto
+ 
+  - name: to be enabled zprezto
+    file: src={{ ansible_env.HOME }}/.zprezto/runcoms/{{ item }} dest={{ ansible_env.HOME }}/.{{ item | basename }} state=link
+    with_fileglob:
+    - "{{ ansible_env.HOME }}/.zprrezto/runcoms/z*"
 
   - name: locate dot-files
     file: src={{ item }} dest={{ ansible_env.HOME }}/.{{ item | basename }} state=link
