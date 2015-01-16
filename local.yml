@@ -58,6 +58,8 @@
     - hub
     - tig
     - icdiff
+    - hg
+    - hg-flow
 
   # run etc/init-openssh.yml to reconfigure and restart daemons
   - name: install openssh package
@@ -85,6 +87,9 @@
     - seil
     - xtrafinder
     - caffeine
+    - virtualbox
+    - vagrant
+    - 0xdbe-eap
   
   - name: install zprezto
     git: repo=https://github.com/sorin-ionescu/prezto dest={{ ansible_env.HOME }}/.zprezto
