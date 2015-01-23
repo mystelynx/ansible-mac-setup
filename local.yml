@@ -30,6 +30,7 @@
 
   - name: add homebrew repositories
     homebrew_tap: tap={{ item }} state=present
+    ignore_errors: yes
     with_items:
     - homebrew/dupes
     - caskroom/cask
@@ -37,6 +38,7 @@
     - caskroom/versions
     - peco/peco
     - motemen/ghq
+    - aereal/homebrew-aereal_casks
 
   - name: install packages
     homebrew: name={{ item }} state=latest
@@ -73,7 +75,6 @@
     - dropbox
     - 1password
     - alfred
-    - pivotalbooster
     - amethyst
     - shortcat
     - intellij-idea
@@ -91,16 +92,3 @@
     - vagrant
     - 0xdbe-eap
   
-  - name: install zprezto
-    git: repo=https://github.com/sorin-ionescu/prezto dest={{ ansible_env.HOME }}/.zprezto
- 
-  - name: to be enabled zprezto
-    file: src={{ ansible_env.HOME }}/.zprezto/runcoms/{{ item }} dest={{ ansible_env.HOME }}/.{{ item | basename }} state=link
-    with_fileglob:
-    - "{{ ansible_env.HOME }}/.zprrezto/runcoms/z*"
-
-  - name: locate dot-files
-    file: src={{ item }} dest={{ ansible_env.HOME }}/.{{ item | basename }} state=link
-    with_fileglob:
-    - dots/*
-
