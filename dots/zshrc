@@ -35,4 +35,5 @@ zle -N zle-line-init
 
 bindkey '^t' vi-forward-word
 
+eval "$(direnv hook zsh)"
 
