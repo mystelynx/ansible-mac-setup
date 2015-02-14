@@ -12,7 +12,6 @@
     "com.apple.appstore",
     "com.apple.keychainaccess",
     "com.microsoft.rdc.mac",
-    "com.jetbrains.intellij",
     "org.pqrs.Karabiner",
     "org.pqrs.Karabiner.EventViewer"
   ]

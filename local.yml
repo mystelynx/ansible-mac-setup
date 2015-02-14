@@ -62,6 +62,7 @@
     - icdiff
     - hg
     - hg-flow
+    - sf-pwgen
 
   # run etc/init-openssh.yml to reconfigure and restart daemons
   - name: install openssh package
@@ -83,7 +84,6 @@
     - java
     - iterm2
     - teleport
-    - authy-bluetooth
     - karabiner
     - seil
     - xtrafinder
@@ -92,4 +92,5 @@
     - vagrant
     - 0xdbe-eap
     - spideroak
+    - hocus-focus
   
